@@ -4,10 +4,7 @@
   "description": "使用 React 取代 nerv，可以用于 Taro2.x H5 端",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {
-    "react": "16.x",
-    "react-dom": "16.x"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/ivan-94/react-replace-nerv/issues"
   },
-  "homepage": "https://github.com/ivan-94/react-replace-nerv#readme"
+  "homepage": "https://github.com/ivan-94/react-replace-nerv#readme",
+  "peerDependencies": {
+    "@tarojs/taro": "2.x",
+    "react": "16.x",
+    "react-dom": "16.x"
+  }
 }

@@ -1,11 +1,15 @@
 {
   "name": "react-replace-nerv",
-  "version": "16.12.0",
+  "version": "16.12.1",
   "description": "使用 React 取代 nerv，可以用于 Taro2.x H5 端",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {},
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

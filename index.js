@@ -8,7 +8,8 @@ Object.assign(Nerv, React, ReactDOM);
 
 // 改写 Owner
 // 这种行为依赖于 React 的底层行为，所以不推荐
-const ReactCurrentOwner = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+const ReactCurrentOwner =
+  React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
 delete ReactCurrentOwner.current;
 let currentOwnner;
 Object.defineProperty(ReactCurrentOwner, 'current', {
@@ -51,10 +52,10 @@ HOOKS.forEach((hook) => {
 
     // 类组件, Taro 2.x 会将函数式组件转换为 类组件，所以一般走这里
     if (owner.stateNode) {
-      Taro[hook].apply(null, arguments);
+      return Taro[hook].apply(null, arguments);
     } else {
       // 函数组件
-      React[hook].apply(null, arguments);
+      return React[hook].apply(null, arguments);
     }
   };
 });
@@ -64,11 +65,14 @@ Nerv.nextTick = function (fn) {
     len = arguments.length - 1;
   while (len-- > 0) args[len] = arguments[len + 1];
 
-  fn = isFunction(fn) ? fn.bind.apply(fn, [null].concat(args)) : fn;
+  fn = typeof fn === 'function' ? fn.bind.apply(fn, [null].concat(args)) : fn;
   if (typeof Promise !== 'undefined') {
-    return resolved.then(fn);
+    return Promise.resolve().then(fn);
   }
-  var timerFunc = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout;
+  var timerFunc =
+    typeof requestAnimationFrame !== 'undefined'
+      ? requestAnimationFrame
+      : setTimeout;
   timerFunc(fn);
 };
 
@@ -76,7 +80,9 @@ Nerv.nextTick = function (fn) {
 Nerv.Current = Taro.Current;
 Nerv.getHooks = function getHooks(index) {
   if (Taro.Current.current === null) {
-    throw new Error(`invalid hooks call: hooks can only be called in a stateless component.`);
+    throw new Error(
+      `invalid hooks call: hooks can only be called in a stateless component.`
+    );
   }
   const hooks = Taro.Current.current.hooks;
   if (index >= hooks.length) {
